@@ -3,10 +3,8 @@
 require_once('../classes/Template.php');
 require_once("../classes/DB.class.php");
 session_start();
-//require_once("DB.class.php");
 
 $db = new DB();
-
 
 // Error message if anything is invalid
 $errorMsg = "";
@@ -65,12 +63,14 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
 }
-if(isset($_SESSION['admin'])){
+print '</ul>';				
+print '</div>';
+if(isset($_SESSION['userType'])){
 	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
 	print '<div>';
 	print '<a class="nav-link" href="logout.php">Logout<span class="sr-only">(current)</span></a>';
@@ -88,9 +88,9 @@ else{
 if (isset($_POST["email"]) && !empty($_POST["email"])){
 	$email = trim($_POST['email']);
 
-	$safeEmail = $db->dbEsc($email);
-	$safeEmail = filter_var($safeEmail, FILTER_SANITIZE_EMAIL);
+	$safeEmail = filter_var($email, FILTER_SANITIZE_EMAIL);
 	$safeEmail = filter_var($safeEmail, FILTER_VALIDATE_EMAIL);
+	$safeEmail = $db->dbEsc($safeEmail);
 	if(empty($safeEmail)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please enter a valid email Address</li>';
 		}
@@ -104,8 +104,8 @@ if (isset($_POST["major"]) && !empty($_POST["major"])){
 	$major = $_POST['major'];
 		foreach ($major as $name){ 
 				$tempMajor = trim($name);
-				$tempMajor = $db->dbEsc($tempMajor);
 				$safeMajor .= filter_var($tempMajor, FILTER_SANITIZE_STRING) . " ";
+				$safeMajor = $db->dbEsc($safeMajor);
 		}
 		if(empty($safeMajor)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please select a valid topping</li>';
@@ -118,8 +118,8 @@ else{
 // Grade logic.  Checks isset/!empty.  Trims/real_escape_strings/sanitizes.  Creates an error if nothing selected or invalid selection
 if (isset($_POST["grade"]) && !empty($_POST["grade"])){
 	$expectedgrade = trim($_POST["grade"]);
-	$safeGrade = $db->dbEsc($expectedgrade);
-	$safeGrade = filter_var($safeGrade, FILTER_SANITIZE_STRING);
+	$safeGrade = filter_var($expectedgrade, FILTER_SANITIZE_STRING);
+	$safeGrade = $db->dbEsc($safeGrade);
 	if(empty($safeGrade)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please select a valid expected grade</li>';
 	}
@@ -131,8 +131,8 @@ else{
 // Topping logic.  Checks isset/!empty.  Trims/real_escape_strings/sanitizes.  Creates an error if nothing selected or invalid selection
 if (isset($_POST["topping"]) && !empty($_POST["topping"])){
 	$favetopping = trim($_POST["topping"]);
-	$safeTopping = $db->dbEsc($favetopping);
-	$safeTopping = filter_var($safeTopping, FILTER_SANITIZE_STRING);
+	$safeTopping = filter_var($favetopping, FILTER_SANITIZE_STRING);
+	$safeTopping = $db->dbEsc($safeTopping);
 	if(empty($safeTopping)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please select a valid topping</li>';
 	}
@@ -156,8 +156,8 @@ else
 
 if (isset($ip) && !empty($ip)){
 	$ip = trim($ip);
-	$safeIp = $db->dbEsc($ip);
-	$safeIp = filter_var($safeIp, FILTER_SANITIZE_STRING);
+	$safeIp = filter_var($ip, FILTER_SANITIZE_STRING);
+	$safeIp = $db->dbEsc($safeIp);
 	if(empty($safeIp)){
 		$safeIp = "NA";
 		$errorMsg .= '<li class = "text-center list-group-item border-0">There was an error with your IP address</li>';

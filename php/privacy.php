@@ -38,7 +38,7 @@ print '<li class="nav-item active">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
 print '</li>';
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
@@ -46,9 +46,8 @@ if(isset($_SESSION['admin'])){
 print '</ul>';				
 print '</div>';
 
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType'])){
 	
-	// Change this to add the user's name to the nav bar
 	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
 	print '<div>';
 	print '<a class="nav-link" href="logout.php">Logout<span class="sr-only">(current)</span></a>';

@@ -38,7 +38,7 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
@@ -46,7 +46,7 @@ if(isset($_SESSION['admin'])){
 print '</ul>';				
 print '</div>';
 
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType'])){
 	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
 	print '<div>';
 	print '<a class="nav-link" href="logout.php">Logout<span class="sr-only">(current)</span></a>';
@@ -60,7 +60,6 @@ else{
 	print '</nav>';
 }
 
-
 print '<div class="container wrapper">';
 print '<h1 class="uw">Find an Album</h1><hr>';
 print '<p class="text-center">Use this form to search for an album.</p>';
@@ -73,7 +72,6 @@ print '<div class="col-sm-8">';
 print '<input type="text" name="search" id="search" class="form-control">';
 print '</div>';
 print '</div>';
-
 
 print '<div class="form-group row">';
 print '<div class="col text-center">';

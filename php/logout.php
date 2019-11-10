@@ -4,7 +4,7 @@ require_once('../classes/Template.php');
 require_once("../classes/DB.class.php");
 session_start();
 
-unset($_SESSION['admin']);
+unset($_SESSION['userType']);
 unset($_SESSION['name']);
 session_destroy();
 
@@ -45,7 +45,7 @@ print '</li>';
 print '</ul>';				
 print '</div>';
 
-if(!isset($_SESSION['admin'])){
+if(!isset($_SESSION['userType'])){
 	print '<div>';
 	print '<a class="nav-link" href="login.php">Login<span class="sr-only">(current)</span></a>';
 	print '</div>';

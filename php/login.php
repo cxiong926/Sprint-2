@@ -20,7 +20,7 @@ $page->finalizeBottomSection();
 
 print $page->getTopSection();
 print '<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">';
-print '<span class="navbar-brand mb-0 h1">Sprint 1</span>';
+print '<span class="navbar-brand mb-0 h1">Sprint 2</span>';
 print '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
 print '<span class="navbar-toggler-icon"></span>';
 print '</button>';
@@ -40,7 +40,7 @@ print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only
 print '</li>';
 
 // User is already logged in
-if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
+if(isset($_SESSION['name'])){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
@@ -79,14 +79,14 @@ else{
 	print '<div class="mx-auto col-10 form-group row mt-3 mb-2">';
 	print '<label class="col-sm-4 col-form-label">Username</label>';
 
-	print '<input type="text" name="username" id="username" class="form-control">';
+	print '<input type="text" name="userName" id="username" class="form-control">';
 
 	print '</div>';
 
 	print '<div class="mx-auto col-10 form-group row mt-3 mb-2">';
 	print '<label class="col-sm-4 col-form-label">Password</label>';
 
-	print '<input type="password" name="password" id="password" class="form-control">';
+	print '<input type="text" name="password" id="password" class="form-control">';
 	
 	print '<button type="submit" name="submit" class="mx-auto my-2 btn btn-primary">Login</button>';
 

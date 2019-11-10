@@ -43,7 +43,7 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
@@ -51,7 +51,7 @@ if(isset($_SESSION['admin'])){
 print '</ul>';
 print '</div>';
 
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType'])){
 	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
 	print '<div>';
 	print '<a class="nav-link" href="logout.php">Logout<span class="sr-only">(current)</span></a>';
@@ -84,8 +84,6 @@ print '<div class="col-sm-8">';
 print '<table class="mx-auto">';
 print '<tr>';
 print '<td class="majorCell">';
-
-
 
 print '<div class="custom-control custom-checkbox">';
 print '<input type="checkbox" name="major[]" class="custom-control-input" value="CIS-AppDev" id="check1">';
@@ -123,7 +121,6 @@ print '<div class="custom-control custom-checkbox">';
 print '<input type="checkbox" name="major[]" class="custom-control-input" value="Other" id="check6">';
 print '<label class="custom-control-label" for="check6">Other</label>';
 print '</div>';
-
 
 print '</td>';
 print '</tr>';

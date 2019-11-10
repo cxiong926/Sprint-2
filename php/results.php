@@ -43,7 +43,7 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
@@ -51,7 +51,7 @@ if(isset($_SESSION['admin'])){
 print '</ul>';
 print '</div>';
 
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType'])){
 	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
 	print '<div>';
 	print '<a class="nav-link" href="logout.php">Logout<span class="sr-only">(current)</span></a>';
@@ -67,8 +67,8 @@ else{
 
 if (isset($_POST["search"]) && !empty($_POST["search"])){
 	$searchTerm = trim($_POST["search"]);
+	$safeSearchTerm = filter_var($searchTerm, FILTER_SANITIZE_STRING);
 	$safeSearchTerm = $db->dbEsc($searchTerm);
-	$safeSearchTerm = filter_var($safeSearchTerm, FILTER_SANITIZE_STRING);
 }
 else{
 	print '<div class="container wrapper">';

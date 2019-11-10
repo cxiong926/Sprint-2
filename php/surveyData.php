@@ -4,8 +4,6 @@ require_once('../classes/Template.php');
 require_once("../classes/DB.class.php");
 session_start();
 
-
-
 $page = new Template('Search Results'); // Automatically sets title
 
 $page->addHeadElement('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>');
@@ -14,14 +12,10 @@ $page->addHeadElement('<script src="https://stackpath.bootstrapcdn.com/bootstrap
 
 $page->addHeadElement('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">');
 
-
 $page->addHeadElement('<link href="../style/style.css" rel="stylesheet">');
 $page->addHeadElement('<link rel="icon" type="image/png" href="../images/me.png">');
 $page->finalizeTopSection(); // Closes head section
 $page->finalizeBottomSection(); // 
-
-
-
 
 print $page->getTopSection();
 print '<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">';
@@ -43,15 +37,15 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-if(isset($_SESSION['admin'])){
-	print '<li class="nav-item active">';
+if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
+	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
 }
 print '</ul>';
 print '</div>';
 
-if(isset($_SESSION['admin'])){
+if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
 	print '<div>';
 	print '<a class="nav-link" href="logout.php">Logout<span class="sr-only">(current)</span></a>';
@@ -88,7 +82,6 @@ if(isset($_SESSION['admin'])){
 		print '<thead>';
 		print '<tr>';
 		print '<th scope="col">ID</th>';
-		//print '<th scope="col">Email</th>';
 		print '<th scope="col">Major</th>';
 		print '<th scope="col">Expected Grade</th>';
 		print '<th scope="col">Favorite Topping</th>';
