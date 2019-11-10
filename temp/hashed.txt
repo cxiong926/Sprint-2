@@ -1,0 +1,18 @@
+Hash for 'testypassword':
+$2y$10$qcIK3IAzOtCXVWpl.w80KOdVN7XTG1L/RD2uuiaJicF56J7ggUgwC
+
+Hash for 'dadepassword':
+$2y$10$sAOQMweTESGMvwCilNg2heP4voJTPJkXdFm5.tQGNyrlhPkriDOqm
+
+Hash for 'davidpassword':
+$2y$10$pt7UmyfbrkFJgRnH24IV6.RvB.RXCHv/CaqXLZ80QbxODC0rQ1Cni
+
+Hash for 'martinpassword':
+$2y$10$lotxeK6ozKWuc29Gu4Wd0OhK6dVC25/yAUGY6MIMbafWCH2HSjMr2
+
+if(password_verify($password,$row['password'])){
+	echo "Password verified";
+	}
+	else{
+		echo "Wrong Password";
+}

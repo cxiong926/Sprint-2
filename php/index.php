@@ -9,13 +9,9 @@ session_start();
 
 $db = new DB();
 
-if (!$db->getConnStatus()) {
-  print "An error has occurred with connection\n";
-  exit;
-}
-
 
 // Need a usertype return from query
+/*
 if(isset($_POST["username"]) && isset($_POST["username"])){
 	$username = trim($_POST["username"]);
 	$safeusername = $db->dbEsc($username);
@@ -25,6 +21,10 @@ if(isset($_POST["username"]) && isset($_POST["username"])){
 	$safePassword = $db->dbEsc($password);
 	$safePassword = filter_var($safePassword, FILTER_SANITIZE_STRING);
 
+	if (!$db->getConnStatus()) {
+		print "An error has occurred with connection\n";
+	exit;
+	}
 
 	$query = 'SELECT userpass FROM user WHERE (username = "'.$username.'")';
 	$result = $db->dbCall($query);
@@ -46,10 +46,10 @@ if(isset($_POST["username"]) && isset($_POST["username"])){
 		}
 		else{
 			print '<p>Incorrect Username or Password</p>';
-	} */
+	} 
 	//$_SESSION['admin'] = "admin";
 	//$_SESSION['name'] = $username;
-}
+}*/
 
 
 
@@ -163,6 +163,7 @@ else{
 	
 	print '<div class="container mb-5">';
 	
+	print '<h1 class="uw">Home</h1><hr>';
 	print '<h2><a class="p-0" href="search.php">Search Albums</a></h2>';
 	print '<p>Use our album search tool to find and purchase your favorite albums.</p><hr>';
 	

@@ -44,7 +44,7 @@ print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
 if(isset($_SESSION['admin'])){
-	print '<li class="nav-item">';
+	print '<li class="nav-item active">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
 }
@@ -128,8 +128,7 @@ else{
 	
 	print '<div class="container wrapper">';
 		
-		print '<h1 class="uw">Survey Results</h1>';
-		print '<div class="py-5 border">';
+		print '<h1 class="uw">Survey Results</h1><hr>';
 		print '<h3 class="text-center">Access Denied</h3>';
 		print "<h5 class='text-center'>You don't have permissions to view this page</h5>";
 		print '<div class="pt-3 col text-center">';

@@ -39,6 +39,7 @@ print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
 
+// User is already logged in
 if(isset($_SESSION['admin']) || isset($_SESSION['user'])){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
