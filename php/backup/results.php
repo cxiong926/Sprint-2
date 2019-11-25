@@ -17,11 +17,14 @@ $page->addHeadElement('<script src="../scripts/scripts.js"></script>');
 
 $page->addHeadElement('<link rel="icon" type="image/png" href="../images/me.png">');
 $page->finalizeTopSection(); // Closes head section
-$page->finalizeBottomSection(); 
+$page->finalizeBottomSection(); // 
+
+
+
 
 print $page->getTopSection();
 print '<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">';
-print '<span class="navbar-brand mb-0 h1">Sprint 3</span>';
+print '<span class="navbar-brand mb-0 h1">Sprint 2</span>';
 print '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
 print '<span class="navbar-toggler-icon"></span>';
 print '</button>';
@@ -61,13 +64,11 @@ else{
 	print '</nav>';
 }
 
-// Validate/Sanitize the search term
 if (isset($_POST["search"]) && !empty($_POST["search"])){
 	$searchTerm = trim($_POST["search"]);
 	$safeSearchTerm = filter_var($searchTerm, FILTER_SANITIZE_STRING);
 	$safeSearchTerm = $db->dbEsc($searchTerm);
 }
-// Display error message and exit if the search term is invalid.
 else{
 	print '<div class="container wrapper">';
 	print '<h1 class="uw">Search Results</h1>';
@@ -86,28 +87,28 @@ else{
 	print '</tbody>';
 	print '</table>';
 	
-	print '<h3 class="text-center">Please enter a valid search term</h3>';
+	print '<h3 class="text-center">Please enter a search term</h3>';
 	print '<div class="col text-center">';
 	print '<button type="submit" class="btn btn-primary mt-3" onclick="goBack()">New Search</button>';
 
 	print '</div>';
 	print '</div>';
-	print $page->getBottomSection(); 
-	exit();
 	
+	exit();
+	print $page->getBottomSection(); 
 	
 }
 
 $db = new DB();
 
 if (!$db->getConnStatus()) {
-	print "An error has occurred with connection\n";
-	exit;
+  print "An error has occurred with connection\n";
+  exit;
 }
 $query = 'SELECT * FROM album WHERE (albumtitle LIKE "'.$safeSearchTerm.'%'.'" OR albumartist LIKE "'.$safeSearchTerm.'%'.'" )';
 $result = $db->dbCall($query);
 
-// Displays message if there is no result from the query
+
 if(!$result){
 	print '<div class="container wrapper">';
 	print '<h1 class="uw">Search Results</h1>';
@@ -131,7 +132,7 @@ if(!$result){
 
 	print '</div>';
 }
-// Displays query results
+
 else {
 
 	print '<div class="container wrapper">';

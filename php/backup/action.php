@@ -9,7 +9,7 @@ $db = new DB();
 // Error message if anything is invalid
 $errorMsg = "";
 
-//Regular and safe vars.  
+//Regular and safe vars.  $tempMajor is used for sanitizing in the foreach loop
 $id = "";
 $ip = "";
 
@@ -43,7 +43,7 @@ $page->finalizeBottomSection();
 
 print $page->getTopSection();
 print '<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">';
-print '<span class="navbar-brand mb-0 h1">Sprint 3</span>';
+print '<span class="navbar-brand mb-0 h1">Sprint 2</span>';
 print '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
 print '<span class="navbar-toggler-icon"></span>';
 print '</button>';
@@ -61,7 +61,6 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-
 if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
@@ -69,7 +68,6 @@ if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 }
 print '</ul>';				
 print '</div>';
-
 if(isset($_SESSION['userType'])){
 	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
 	print '<div>';
@@ -102,14 +100,14 @@ else{
 if (isset($_POST["major"]) && !empty($_POST["major"])){
 	
 	$major = $_POST['major'];
-	foreach ($major as $name){ 
-		$tempMajor = trim($name);
-		$safeMajor .= filter_var($tempMajor, FILTER_SANITIZE_STRING) . " ";
-		$safeMajor = $db->dbEsc($safeMajor);
-	}
-	if(empty($safeMajor)){
+		foreach ($major as $name){ 
+				$tempMajor = trim($name);
+				$safeMajor .= filter_var($tempMajor, FILTER_SANITIZE_STRING) . " ";
+				$safeMajor = $db->dbEsc($safeMajor);
+		}
+		if(empty($safeMajor)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please select a valid topping</li>';
-	}
+		}
 }
 else{
 	$errorMsg .= '<li class = "text-center list-group-item border-0">Major(s) not selected</li>';
@@ -120,7 +118,6 @@ if (isset($_POST["grade"]) && !empty($_POST["grade"])){
 	$expectedgrade = trim($_POST["grade"]);
 	$safeGrade = filter_var($expectedgrade, FILTER_SANITIZE_STRING);
 	$safeGrade = $db->dbEsc($safeGrade);
-	
 	if(empty($safeGrade)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please select a valid expected grade</li>';
 	}
@@ -134,7 +131,6 @@ if (isset($_POST["topping"]) && !empty($_POST["topping"])){
 	$favetopping = trim($_POST["topping"]);
 	$safeTopping = filter_var($favetopping, FILTER_SANITIZE_STRING);
 	$safeTopping = $db->dbEsc($safeTopping);
-	
 	if(empty($safeTopping)){
 		$errorMsg .= '<li class = "text-center list-group-item border-0">Please select a valid topping</li>';
 	}
@@ -160,7 +156,6 @@ if (isset($ip) && !empty($ip)){
 	$ip = trim($ip);
 	$safeIp = filter_var($ip, FILTER_SANITIZE_STRING);
 	$safeIp = $db->dbEsc($safeIp);
-	
 	if(empty($safeIp)){
 		$safeIp = "NA";
 		$errorMsg .= '<li class = "text-center list-group-item border-0">There was an error with your IP address</li>';
@@ -187,27 +182,31 @@ if (strlen($errorMsg) > 0){
 	print '</div>';
 	print '</div>';
 
+
 	print '</div>';
 }
 else{
-	print '<div class="container wrapper">';
-	print '<h1 class="uw">Student Survey</h1><hr>';
-	print '<h2 class="text-center mt-4">Thank you for participating!</h2><br>';
-	print '<div class="text-center"><a href="survey.php">Take another survey</a></div>';
+print '<div class="container wrapper">';
+print '<h1 class="uw">Student Survey</h1><hr>';
+print '<h2 class="text-center mt-4">Thank you for participating!</h2><br>';
+print '<div class="text-center"><a href="survey.php">Take another survey</a></div>';
 
-	print '</div>';
+print '</div>';
 
-	$db = new DB();
+$db = new DB();
 
-	if (!$db->getConnStatus()) {
-		print "An error has occurred with connection\n";
-		exit;
-	}
+if (!$db->getConnStatus()) {
+  print "An error has occurred with connection\n";
+  exit;
+}
 
-	$query = 'INSERT INTO survey VALUES (0, now(), "'.$safeMajor.'", "'.$safeGrade.'", "'.$safeTopping.'", "'.$safeIp.'", "'.$safeId.'" )';
-	$db->dbCall($query);
+$query = 'INSERT INTO survey VALUES (0, now(), "'.$safeMajor.'", "'.$safeGrade.'", "'.$safeTopping.'", "'.$safeIp.'", "'.$safeId.'" )';
+$db->dbCall($query);
 
 }
+
+
+
 
 print $page->getBottomSection(); // closes the html
 

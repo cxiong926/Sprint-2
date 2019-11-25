@@ -19,3 +19,11 @@ img{
 	vertical-align: middle;
 
 }
+label:before { 
+	content: ' '; 
+	display: block; 
+}
+	
+#searchError, #passwordError, #userNameError, #emailError, #majorError, #gradeError, #toppingError{
+	color:red;
+}

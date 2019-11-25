@@ -22,50 +22,59 @@ if(isset($_POST["userName"]) && isset($_POST["userName"])){
 	$data = array("name" => $safeUserName,
 					"pw" => $safePassword);
 
-	// json_encode the data before sending
+	// 1.  json_encode the data before sending
 	$dataJson = json_encode($data);
 
 	$url = "http://cnmtsrv2.uwsp.edu/~bxion419/Sprint2&3/php/webService.php";
 
 	$ch = curl_init();
 
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-	curl_setopt($ch, CURLOPT_POSTFIELDS, $dataJson);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch,
+		CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch,
+		CURLOPT_POSTFIELDS, $dataJson);
+	// Check to see what return transfer does.  Do we need it?
+	curl_setopt($ch,
+		CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch,
+		CURLOPT_URL, $url);
 
 	$return = curl_exec($ch);
-
+	//var_dump($return);
 	// Check HTTP Status
 	$httpStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 	if ($httpStatus != 200) {
+		// Usually don't reflect httpStatus to user.
 		print "Something went wrong with the request: " . $httpStatus;
 		curl_close($ch);
 		exit;
 	}
 
-	// Decode the return object
+	// Verify returnobject contains what you expect.
 	$resultObject = json_decode($return);
 
-	// Verify returnobject contains what's expected.
 	if (!is_object($resultObject)) {
 			print "Something went wrong decoding the return";
 			curl_close($ch);
 			exit;
 	}
 
-	// Check for presence of an errorMessage property in the resultObject
+
+	/* 4.	Check for presence of an errorMessage property in the resultObject
+					Take appropriate action if there's an error, like display it. */
+		
 	if (property_exists($resultObject,"ErrorMessage")) {
 			$loginError = true;
 			
 	} 
-	//  If no error, set session variables
+	//  5.  If no error, print the result property of the resultObject*/
 	elseif (property_exists($resultObject,"name")) {
 		$_SESSION['name'] = $resultObject->name;
 		$_SESSION['userType'] = $resultObject->role;
 		} 
 	else {
+		
 		$loginError = true;
 	}
 
@@ -88,7 +97,7 @@ $page->finalizeBottomSection();
 
 print $page->getTopSection();
 print '<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">';
-print '<span class="navbar-brand mb-0 h1">Sprint 3</span>';
+print '<span class="navbar-brand mb-0 h1">Sprint 2</span>';
 print '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
 print '<span class="navbar-toggler-icon"></span>';
 print '</button>';
@@ -106,7 +115,6 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-
 if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
@@ -190,6 +198,7 @@ if($loginError == false){
 
 	print '</div>';
 	print '</div>';
+
 
 	print '</div>';
 }

@@ -19,7 +19,7 @@ $page->finalizeBottomSection();
 
 print $page->getTopSection();
 print '<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">';
-print '<span class="navbar-brand mb-0 h1">Sprint 3</span>';
+print '<span class="navbar-brand mb-0 h1">Sprint 2</span>';
 print '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
 print '<span class="navbar-toggler-icon"></span>';
 print '</button>';
@@ -37,51 +37,74 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
+
+// User is already logged in
+if(isset($_SESSION['name'])){
 	print '<li class="nav-item">';
 	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
 	print '</li>';
-}
-print '</ul>';				
-print '</div>';
-
-if(isset($_SESSION['userType'])){
-	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
+	print '</ul>';		
+	
+	
 	print '<div>';
 	print '<a class="nav-link" href="logout.php">Logout<span class="sr-only">(current)</span></a>';
 	print '</div>';
-	print '</nav>';
-}
-else{
-	print '<div>';
-	print '<a class="nav-link" href="login.php">Login<span class="sr-only">(current)</span></a>';
+	
 	print '</div>';
 	print '</nav>';
+	
+	print '<div class="container wrapper">';
+	print '<h1 class="uw">Login</h1><hr>';
+	
+
+	print '<form class="py-4 border rounded col-md-6 mx-auto px-4" action="index.php">';
+	print "<h3 class='text-center'>You're already logged in!</h3>";
+	print '<p class="text-center">Please visit another page</p>';
+	print '<div class="col text-center">';
+	print '<button type="submit" name="submit" class="mt-2 btn btn-primary">Home</button>';
+	print '</div>';
+	print '</form>';
+
+	print '</div>';
 }
+else{
+	print '</ul>';
+	print '</div>';
+	print '</nav>';	
+	
+	print '<div class="container wrapper">';
+	print '<h1 class="uw">Login</h1><hr>';
+	print '<p class="text-center">Please enter your username and password</p>';
 
-print '<div class="container wrapper">';
-print '<h1 class="uw">Find an Album</h1><hr>';
-print '<p class="text-center">Use this form to search for an album.</p>';
+	print '<form name="loginForm" onsubmit="return loginValidate()" class="border rounded col-md-6 mx-auto px-4" method="POST" action="index.php">';
+	print '<img src="../images/profile.png" class="pro mt-3 py-3 mx-auto d-block" alt="Profile Picture">';
+	print '<div class="mx-auto col-10 form-group row mt-0 mb-0">';
+	print '<label class="col-sm-4 col-form-label">Username</label>';
 
-print '<form class="border rounded col-md-10 mx-auto px-4" name="searchForm" onsubmit="return searchValidate()" id="albumSearch" method="POST" action="results.php">';
 
-print '<div class="form-group row mt-3 mb-2">';
-print '<label class="col-sm-4 col-form-label">What are you looking for?</label>';
-print '<div class="col-sm-8">';
-print '<input type="text" name="search" id="search" class="form-control">';
-print '</div>';
-print '</div>';
-print '<div class="text-center mb-2" id="searchError"></div>';
+	print '<input type="text" name="userName" id="username" class="form-control">';
+	print '<p id="userNameError" class="mx-auto mb-0"></p>';
+	print '</div>';
+	
 
-print '<div class="form-group row">';
-print '<div class="col text-center">';
-print '<button type="submit" name="submit" class="btn btn-primary">Search</button>';
-print '</div>';
-print '</div>';
+	print '<div class="mx-auto col-10 form-group row mt-0 mb-0">';
+	print '<label class="col-sm-4 col-form-label">Password</label>';
 
-print '</form>';
 
-print '</div>';
+	print '<input type="password" name="password" id="password" class="form-control">';
+	print '<p id="passwordError" class="mx-auto mb-0"></p>';
+
+	
+	
+	print '</div>';
+
+	print '<div class="my-2 mx-auto text-center">';
+
+	print '<button type="submit" name="submit" class="mx-auto my-2 btn btn-primary">Login</button>';
+	print '</div>';
+	print '</form>';
+	print '</div>';
+}
 
 print $page->getBottomSection(); // closes the html
 

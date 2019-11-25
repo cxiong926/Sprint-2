@@ -4,6 +4,8 @@ require_once('../classes/Template.php');
 require_once("../classes/DB.class.php");
 session_start();
 
+
+
 $page = new Template('Find an Album'); // Automatically sets title
 
 $page->addHeadElement('<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>');
@@ -19,7 +21,7 @@ $page->finalizeBottomSection();
 
 print $page->getTopSection();
 print '<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">';
-print '<span class="navbar-brand mb-0 h1">Sprint 3</span>';
+print '<span class="navbar-brand mb-0 h1">Sprint 2</span>';
 print '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
 print '<span class="navbar-toggler-icon"></span>';
 print '</button>';
@@ -31,57 +33,71 @@ print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="survey.php">Survey</a>';
 print '</li>';
-print '<li class="nav-item active">';
+print '<li class="nav-item">';
 print '<a class="nav-link" href="search.php">Find an Album<span class="sr-only">(current)</span></a>';
 print '</li>';
 print '<li class="nav-item">';
 print '<a class="nav-link" href="privacy.php">Privacy Policy<span class="sr-only">(current)</span></a>';
 print '</li>';
-if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
-	print '<li class="nav-item">';
-	print '<a class="nav-link" href="surveyData.php">Survey Data<span class="sr-only">(current)</span></a>';
-	print '</li>';
-}
 print '</ul>';				
 print '</div>';
 
 if(isset($_SESSION['userType'])){
-	print '<div>Welcome, ' . $_SESSION['name'] . '!</div>';
+	unset($_SESSION['userType']);
+	unset($_SESSION['name']);
+	session_destroy();
+	
+	if(!isset($_SESSION['userType'])){
+		print '<div>';
+		print '<a class="nav-link" href="login.php">Login<span class="sr-only">(current)</span></a>';
+		print '</div>';
+
+		print '</nav>';
+		
+		print '<div class="container wrapper">';
+		print '<h1 class="uw">Logout</h1><hr>';
+		
+
+		print '<div class="py-4 border rounded col-md-6 mx-auto px-4" action="home.php">';
+		print '<h3 class="text-center">Logged Out</h3>';
+		print '<p class="text-center">You have been successfully logged out!</p>';
+		print '<div class="col text-center">';
+		print '<a href="index.php" >Home</a>';
+		print '</div>';
+		print '</div>';
+
+		print '</div>';
+	}else{
+		print '<div>';
+		print '<a class="nav-link" href="login.php">Login<span class="sr-only">(current)</span></a>';
+		print '</div>';
+		print '</nav>';
+		
+		print '<div class="container wrapper">';
+		print '<h1 class="uw">Oops! Something went wrong!</h1><hr>';
+		print '<p class="text-center">Please try again!</p>';
+
+		print '<form class=" border rounded col-md-6 mx-auto px-4" method="POST" action="logout.php">';
+		
+		print '<form action="logout.php">';
+		print '<button type="submit" name="submit" class="mt-2 btn btn-primary mx-auto">Try again</button>';
+		print '</form>';
+	}
+}else{
 	print '<div>';
-	print '<a class="nav-link" href="logout.php">Logout<span class="sr-only">(current)</span></a>';
-	print '</div>';
-	print '</nav>';
+		print '<a class="nav-link" href="login.php">Login<span class="sr-only">(current)</span></a>';
+		print '</div>';
+		print '</nav>';
+		
+		print '<div class="container wrapper">';
+		print '<h1 class="uw">Oops! Something went wrong!</h1><hr>';
+		print "<p class='text-center'>Can't log out if you aren't logged in!</p>";
+
+		print '<div class="text-center"><a href="index.php">Home</a></div>';
+		print '</div>';
 }
-else{
-	print '<div>';
-	print '<a class="nav-link" href="login.php">Login<span class="sr-only">(current)</span></a>';
-	print '</div>';
-	print '</nav>';
-}
 
-print '<div class="container wrapper">';
-print '<h1 class="uw">Find an Album</h1><hr>';
-print '<p class="text-center">Use this form to search for an album.</p>';
-
-print '<form class="border rounded col-md-10 mx-auto px-4" name="searchForm" onsubmit="return searchValidate()" id="albumSearch" method="POST" action="results.php">';
-
-print '<div class="form-group row mt-3 mb-2">';
-print '<label class="col-sm-4 col-form-label">What are you looking for?</label>';
-print '<div class="col-sm-8">';
-print '<input type="text" name="search" id="search" class="form-control">';
-print '</div>';
-print '</div>';
-print '<div class="text-center mb-2" id="searchError"></div>';
-
-print '<div class="form-group row">';
-print '<div class="col text-center">';
-print '<button type="submit" name="submit" class="btn btn-primary">Search</button>';
-print '</div>';
-print '</div>';
-
-print '</form>';
-
-print '</div>';
+	
 
 print $page->getBottomSection(); // closes the html
 

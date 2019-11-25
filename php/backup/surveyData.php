@@ -15,11 +15,11 @@ $page->addHeadElement('<script src="../scripts/scripts.js"></script>');
 
 $page->addHeadElement('<link rel="icon" type="image/png" href="../images/me.png">');
 $page->finalizeTopSection(); // Closes head section
-$page->finalizeBottomSection(); 
+$page->finalizeBottomSection(); // 
 
 print $page->getTopSection();
 print '<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">';
-print '<span class="navbar-brand mb-0 h1">Sprint 3</span>';
+print '<span class="navbar-brand mb-0 h1">Sprint 2</span>';
 print '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">';
 print '<span class="navbar-toggler-icon"></span>';
 print '</button>';
@@ -90,18 +90,17 @@ if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 		print '</tr>';
 		print '</thead>';
 		print '<tbody>';
-			
-		// Creates and populates a table row for each result
-		foreach ($result as $returnedvalue){
-			print '<tr>';
-			print '<td>' . $returnedvalue['id'] . '</td>';
-			print '<td>' . $returnedvalue['major'] . '</td>';
-			print '<td>' . $returnedvalue['expectedgrade'] . '</td>';
-			print '<td>' . $returnedvalue['favetopping'] . '</td>';
-			print '<td>' . $returnedvalue['userip'] . '</td>';
-			print '<td>' . $returnedvalue['submittime'] . '</td>';
-			print '</tr>';  
-		}
+
+			foreach ($result as $returnedvalue){
+				print '<tr>';
+				print '<td>' . $returnedvalue['id'] . '</td>';
+				print '<td>' . $returnedvalue['major'] . '</td>';
+				print '<td>' . $returnedvalue['expectedgrade'] . '</td>';
+				print '<td>' . $returnedvalue['favetopping'] . '</td>';
+				print '<td>' . $returnedvalue['userip'] . '</td>';
+				print '<td>' . $returnedvalue['submittime'] . '</td>';
+				print '</tr>';  
+			}
 			
 		print '</tbody>';
 		print '</table>';
@@ -112,7 +111,6 @@ if(isset($_SESSION['userType']) && $_SESSION['userType'] == "admin"){
 
 	print '</div>';
 }
-//  Displays error message if user doesn't have permissions to view page
 else{
 	print '<a class="nav-link" href="login.php">Login<span class="sr-only">(current)</span></a>';
 	print '</nav>';
